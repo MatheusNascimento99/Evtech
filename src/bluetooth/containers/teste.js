@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList } from 'react-native';
-import { PermissionsAndroid } from 'react-native';
+import { View, Text, PermissionsAndroid, Platform } from 'react-native';
 
 function Teste(props) {
   const [hasPermission, setHasPermission] = useState(false);
@@ -30,15 +29,13 @@ function Teste(props) {
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         ]);
 
-        setHasPermission(
-          result['android.permission.BLUETOOTH_CONNECT'] ===
-            PermissionsAndroid.RESULTS.GRANTED &&
-          result['android.permission.BLUETOOTH_SCAN'] ===
-            PermissionsAndroid.RESULTS.GRANTED &&
-          result['android.permission.ACCESS_FINE_LOCATION'] ===
-            PermissionsAndroid.RESULTS.GRANTED,
-            console.log(hasPermission)
-        );
+        const permissionGranted = 
+          result['android.permission.BLUETOOTH_CONNECT'] === PermissionsAndroid.RESULTS.GRANTED &&
+          result['android.permission.BLUETOOTH_SCAN'] === PermissionsAndroid.RESULTS.GRANTED &&
+          result['android.permission.ACCESS_FINE_LOCATION'] === PermissionsAndroid.RESULTS.GRANTED;
+
+        setHasPermission(permissionGranted);
+        console.log("Permissão concedida:", permissionGranted);
       }
     }
   };
@@ -53,7 +50,7 @@ function Teste(props) {
 
   return (
     <View>
-      <Text>Testando </Text>
+      <Text>Testando</Text>
     </View>
   );
 }

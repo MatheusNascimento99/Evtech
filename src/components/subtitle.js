@@ -12,16 +12,22 @@ function Subtitle(props) {
 
 const style = StyleSheet.create({
   container: {
-    paddingVertical:15,
     flexDirection:"row",
+    marginVertical:15,
+    alignItems:"center"
   },
-  text: {
-    fontSize: 20,
-    flex:1,
+  title: {
+    fontSize: 16,
+    color:"gray",
     fontWeight:"bold",
   },
   line: {
-    width:50
+    width:50,
+    borderBottomWidth:1,
+    marginLeft:5,
+    marginTop:3,
+    flex:1,
+    borderColor:"#eceff1"
   },
 });
 

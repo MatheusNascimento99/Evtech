@@ -6,6 +6,7 @@ import Toggle from '../../components/toggle';
 import Subtitle from '../../components/subtitle';
 
 
+
 function BluetoothList(props) {
   const lista = [
     {

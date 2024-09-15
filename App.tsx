@@ -1,11 +1,11 @@
 import React from 'react';
-import BluetoothListLayout from './src/bluetooth/containers/bluetooth-lis';
+import BluetoothList from './src/bluetooth/containers/bluetooth-list';
 import { Text, View } from 'react-native';
 
 function App(): React.JSX.Element {
   return (
     <View>
-      <Text> ola entao</Text>
+      <BluetoothList/>
     </View>
   );
 }

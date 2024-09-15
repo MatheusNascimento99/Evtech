@@ -17,7 +17,7 @@ const style = StyleSheet.create({
     alignItems:"center"
   },
   title: {
-    marginLeft:15,
+    marginLeft:10,
     fontSize: 16,
     color:"gray",
     fontWeight:"bold",

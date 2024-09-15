@@ -1,54 +1,60 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import Divisor from '../components/divisor';
 
 function Device(props) {
   return (
-    <TouchableOpacity style={style.wrapper} onPress={props.onPress}>
-      <View style={style.wrapperLeft}>
-        <Image style={style.iconLeft} source={props.iconLeft} />
-      </View>
-      <View style={style.wrapperName}>
-        <Text style={style.name}>{props.name}</Text>
-      </View>
-      <Image style={style.iconRight} source={props.iconRight}/>
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity style={style.wrapper} onPress={props.onPress}>
+        <View style={style.wrapperLeft}>
+          <Image style={style.iconLeft} source={props.iconLeft} />
+        </View>
+        <View style={style.wrapperName}>
+          <Text style={style.name}>{props.name}</Text>
+        </View>
+        <Image style={style.iconRight} source={props.iconRight} />
+      </TouchableOpacity>
+      <Divisor />
+    </>
   );
 }
 
 const style = StyleSheet.create({
   wrapper: {
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
     flexDirection: 'row',
-    alignItems  :"center",
-    justifyContent:"space-between",
-    padding:10
-
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 10,
   },
   wrapperLeft: {
-    width:40,
-    height:40,
-    borderRadius:20,
-    borderColor:"gray",
-    borderWidth:1,
-    alignItems  :"center",
+    width: 60,
+    height: 60,
+    borderRadius: 60,
+    borderColor: 'gray',
+    borderWidth: 1,
+    alignItems: 'center',
     flexDirection: 'column',
-    justifyContent:"center",
+    justifyContent: 'center',
   },
-  swiiconLefttch: {
-    width:20,
-    height:20,
+  iconLeft: {
+    width: 50,
+    height: 50,
   },
   wrapperName: {
-    flex:1,
-    justifyContent:"flex-start",
-    marginLeft:15,
+    flex: 1,
+    justifyContent: 'flex-start',
+    marginLeft: 15,
   },
   name: {
-    width: 50,
+    fontWeight: '800',
+    fontSize: 16,
   },
-  swiiconLeficonRightttch: {
-    width: 50,
+  iconRight: {
+    width: 30,
+    height: 30,
+    marginLeft: 3,
   },
 });
 

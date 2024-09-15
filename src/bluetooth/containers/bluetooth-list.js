@@ -9,7 +9,7 @@ import Device from '../../components/device';
 function BluetoothList(props) {
   const lista = [
     {
-      name: 'Nascimento',
+      name: 'Matheus Nascimento',
       key: '1',
     },
     {

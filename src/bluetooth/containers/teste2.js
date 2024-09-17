@@ -1,54 +1,87 @@
-import React, {useEffect} from 'react';
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  NativeEventEmitter,
+  NativeModules,
+} from 'react-native';
 import BleManager from 'react-native-ble-manager';
 
-/* const BleManagerModule = NativeModules.BleManager;
-const bleManagerEmitter = new NativeEventEmitter(BleManagerModule); */
-
 function Teste2(props) {
-/*   useEffect(() => {
-    BleManager.start({showAlert: false}).then(() => {
-      // Success code
-      console.log('Module initialized');
-    });
-  }, []); */
-
+  const [devices, setDevices] = useState([]);
+  const bleManagerEmitter = new NativeEventEmitter(NativeModules.BleManager); // Movido para o escopo superior para acesso em diferentes partes
 
   useEffect(() => {
+    // Inicializa o BleManager
+    BleManager.start({showAlert: false}).then(() => {
+      console.log('1 - Módulo inicializado');
+
+      // Função para tratar dispositivos encontrados
+      const handleDiscoverPeripheral = (peripheral) => {
+        setDevices((prevDevices) => {
+          // Verifica se o dispositivo já está na lista
+          if (!prevDevices.find(d => d.id === peripheral.id)) {
+            return [...prevDevices, peripheral];
+          }
+          return prevDevices;
+        });
+      };
+
+      // Adiciona o listener para o evento de dispositivos encontrados
+      bleManagerEmitter.addListener(
+        'BleManagerDiscoverPeripheral',
+        handleDiscoverPeripheral,
+      );
+    });
+
+    // Ativa o Bluetooth se necessário
     BleManager.enableBluetooth()
       .then(() => {
-        // Success code
-        requestPermission();
-        console.log('The bluetooth is already enabled or the user confirm');
+        console.log('2 - O Bluetooth já está ativado ou o usuário confirmou.');
       })
-      .catch(error => {
-        // Failure code
-        console.log('The user refuse to enable bluetooth');
+      .catch((error) => {
+        // Caso o usuário não permita
+        console.log('2.1 - O usuário recusou a ativação do Bluetooth.');
       });
+
+    // Remove o listener ao desmontar o componente
+    return () => {
+      bleManagerEmitter.removeAllListeners('BleManagerDiscoverPeripheral');
+    };
   }, []);
 
-
-
-
+  // Função para iniciar o escaneamento de dispositivos
   function Scan() {
-    BleManager.scan([], 5, true).then(() => {
-      // Success code
-      console.log('Scan started');
+    BleManager.scan([], 30, true).then(() => {
+      console.log('Scan iniciado');
+    }).catch(error => {
+      console.error('Erro ao iniciar o scan:', error);
     });
   }
 
-
-  
   return (
-    <View title="Bluetooth">
-      <Text>Olaa</Text>
+    <View>
+      <Text>Dispositivos Encontrados:</Text>
+      <FlatList
+        data={devices}
+        keyExtractor={item => item.id}
+        renderItem={({item}) => (
+          <View>
+            <Text>{item.name || 'Unnamed Device'}</Text>
+            <Text>ID: {item.id}</Text>
+          </View>
+        )}
+      />
       <TouchableOpacity
         onPress={() => {
-          Scan;
+          Scan();
         }}>
         <Text>Scanear</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
 export default Teste2;
